@@ -1,0 +1,83 @@
+quiz = [
+    {
+        "question": "What is a neural network?",
+        "options": ["A type of artificial intelligence", "A data structure", "A search algorithm", "A mathematical model"],
+        "answer": "A type of artificial intelligence"
+    },
+    {
+        "question": "Which activation function is commonly used in neural networks?",
+        "options": ["ReLU", "Bubble Sort", "Gradient Descent", "Backpropagation"],
+        "answer": "ReLU"
+    },
+    {
+        "question": "What is the purpose of backpropagation in neural networks?",
+        "options": ["To update weights", "To initialize neurons", "To add layers", "To normalize data"],
+        "answer": "To update weights"
+    }
+]
+
+
+def display_question(question, options):
+    print(f"\n{question}")
+    for idx, option in enumerate(options, 1):
+        print(f"{idx}. {option}")
+
+
+def get_user_input():
+    while True:
+        try:
+            choice = int(input("Choose the number of your answer: "))
+            if choice in [1, 2, 3, 4]:
+                return choice
+            else:
+                print("Invalid choice. Please select a number between 1 and 4.")
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+
+
+def check_answer(user_choice, correct_answer, options):
+    if options[user_choice - 1] == correct_answer:
+        print("Correct!")
+        return True
+    else:
+        print(f"Incorrect. The correct answer is: {correct_answer}")
+        return False
+
+def run_quiz(quiz):
+    score = 0
+    for item in quiz:
+        display_question(item["question"], item["options"])
+        user_choice = get_user_input()
+        if check_answer(user_choice, item["answer"], item["options"]):
+            score += 1
+
+    print(f"\nYour final score is {score}/{len(quiz)}.")
+
+if __name__ == "__main__":
+    run_quiz(quiz)
+#OUTPUT
+What is a neural network?
+1. A type of artificial intelligence
+2. A data structure
+3. A search algorithm
+4. A mathematical model
+Choose the number of your answer: 1
+Correct!
+
+Which activation function is commonly used in neural networks?
+1. ReLU
+2. Bubble Sort
+3. Gradient Descent
+4. Backpropagation
+Choose the number of your answer: 1
+Correct!
+
+What is the purpose of backpropagation in neural networks?
+1. To update weights
+2. To initialize neurons
+3. To add layers
+4. To normalize data
+Choose the number of your answer: 1
+Correct!
+
+Your final score is 3/3.
