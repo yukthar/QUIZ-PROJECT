@@ -1,0 +1,29 @@
+#wordcounter
+def count_words(text):
+    """Counts the number of words in the given text."""
+    
+    words = text.split()
+    return len(words)
+
+def main():
+    """Main function to run the Word Counter program."""
+    
+    user_input = input("Enter a sentence or paragraph: ").strip()
+    
+    
+    if not user_input:
+        print("You entered an empty input. Please provide some text.")
+        return
+    
+    
+    word_count = count_words(user_input)
+    
+    
+    print(f"The number of words in the provided text is: {word_count}")
+
+if __name__ == "__main__":
+    main()
+#output
+Enter a sentence or paragraph: yuktha
+The number of words in the provided text is: 1
+​
