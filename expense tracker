@@ -1,0 +1,172 @@
+#code
+import csv
+import os
+
+
+EXPENSE_FILE = 'mytotalexpenses.csv'
+
+def initialize_file():
+    """Create the CSV file with sample data if it doesn't exist."""
+    if not os.path.isfile(EXPENSE_FILE):
+        with open(EXPENSE_FILE, 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow([
+                'Month of Salary', 'Expenses of the Month', 'Salary', 
+                'Accommodation', 'Transportation', 'Foods', 
+                'BD Expenses', 'Others', 'Total Cost', 'Remaining'
+            ])
+        
+            sample_data = [
+                ['August', 'September', 'dh2,750.00', 'dh500.00', 'dh180.00', 'dh190.00', 'dh1,380.00', 'dh225.00', 'dh2,475.00', 'dh0.00'],
+                ['September', 'October', 'dh2,500.00', 'dh505.00', 'dh170.00', 'dh200.00', 'dh1,350.00', 'dh190.00', 'dh2,415.00', 'dh70.00'],
+                ['October', 'November', 'dh2,500.00', 'dh505.00', 'dh140.00', 'dh180.00', 'dh1,400.00', 'dh200.00', 'dh2,425.00', 'dh0.00'],
+                ['November', 'December', 'dh2,500.00', 'dh505.00', 'dh145.00', 'dh180.00', 'dh1,100.00', 'dh500.00', 'dh2,430.00', ''],
+                ['December', 'January', 'dh2,750.00', 'dh505.00', 'dh140.00', 'dh200.00', 'dh1,650.00', 'dh250.00', 'dh2,745.00', ''],
+                ['', '', 'dh13,000.00', '', '', '', 'dh6,880.00', '', '', ''],
+                ['', '', '৳390,000.00', '', '', '', '৳199,520.00', '', '', '']
+            ]
+            writer.writerows(sample_data)
+
+def read_expenses():
+    """Read and display the expenses from the CSV file."""
+    print("\n--- Monthly Expenses ---")
+    with open(EXPENSE_FILE, 'r') as file:
+        reader = csv.reader(file)
+        header = next(reader)  # Skip header
+        for row in reader:
+            if row[0]:  # Skip empty rows
+                print(f"Month of Salary: {row[0]}")
+                print(f"Expenses of the Month: {row[1]}")
+                print(f"Salary: {row[2]}")
+                print(f"Accommodation: {row[3]}")
+                print(f"Transportation: {row[4]}")
+                print(f"Foods: {row[5]}")
+                print(f"BD Expenses: {row[6]}")
+                print(f"Others: {row[7]}")
+                print(f"Total Cost: {row[8]}")
+                print(f"Remaining: {row[9]}")
+                print("---------------------------")
+
+def analyze_expenses():
+    """Analyze the expenses and display summary."""
+    total_salary = 0
+    total_expenses = 0
+    total_remaining = 0
+    
+    def parse_currency(value):
+        """Convert currency string to float."""
+        try:
+            return float(value.replace('dh', '').replace('৳', '').replace(',', '').strip())
+        except ValueError:
+            return 0.0
+    
+    with open(EXPENSE_FILE, 'r') as file:
+        reader = csv.reader(file)
+        next(reader)  # Skip header
+        for row in reader:
+            if row[0]:  # Skip empty rows
+                total_salary += parse_currency(row[2])
+                total_expenses += parse_currency(row[8])
+                total_remaining += parse_currency(row[9])
+    
+    print("\n--- Expense Analysis ---")
+    print(f"Total Salary: {total_salary:.2f}")
+    print(f"Total Expenses: {total_expenses:.2f}")
+    print(f"Total Remaining: {total_remaining:.2f}")
+
+def main():
+    """Main function to interact with the user."""
+    initialize_file()
+    
+    while True:
+        print("\n--- Expense Tracker ---")
+        print("1. Read Expenses")
+        print("2. Analyze Expenses")
+        print("3. Exit")
+        
+        choice = input("Select an option (1/2/3): ")
+        
+        if choice == '1':
+            read_expenses()
+        
+        elif choice == '2':
+            analyze_expenses()
+        
+        elif choice == '3':
+            print("Exiting...")
+            break
+        
+        else:
+            print("Invalid option. Please select a valid option.")
+
+if __name__ == "__main__":
+    main()
+    #OUTPUT
+    -- Expense Tracker ---
+1. Read Expenses
+2. Analyze Expenses
+3. Exit
+Select an option (1/2/3): 1
+
+--- Monthly Expenses ---
+Month of Salary: Auguest
+Expenses of the Month: September
+Salary: dh2,750.00
+Accommodation: dh500.00
+Transportation: dh180.00
+Foods: dh190.00
+BD Expenses: dh1,380.00
+Others: dh225.00
+Total Cost: dh2,475.00
+Remaining: dh0.00
+---------------------------
+Month of Salary: September
+Expenses of the Month: Octobaer
+Salary: dh2,500.00
+Accommodation: dh505.00
+Transportation: dh170.00
+Foods: dh200.00
+BD Expenses: dh1,350.00
+Others: dh190.00
+Total Cost: dh2,415.00
+Remaining: dh70
+---------------------------
+Month of Salary: Octobaer
+Expenses of the Month: November
+Salary: dh2,500.00
+Accommodation: dh505.00
+Transportation: dh140.00
+Foods: dh180.00
+BD Expenses: dh1,400.00
+Others: dh200.00
+Total Cost: dh2,425.00
+Remaining: dh0.00
+---------------------------
+Month of Salary: November
+Expenses of the Month: December
+Salary: dh2,500.00
+Accommodation: dh505.00
+Transportation: dh145.00
+Foods: dh180.00
+BD Expenses: dh1,100.00
+Others: dh500.00
+Total Cost: dh2,430.00
+Remaining: 
+---------------------------
+Month of Salary: December
+Expenses of the Month: Januray
+Salary: dh2,750.00
+Accommodation: dh505.00
+Transportation: dh140.00
+Foods: dh200.00
+BD Expenses: dh1,650.00
+Others: dh250.00
+Total Cost: dh2,745.00
+Remaining: 
+---------------------------
+
+--- Expense Tracker ---
+1. Read Expenses
+2. Analyze Expenses
+3. Exit
+Select an option (1/2/3)
